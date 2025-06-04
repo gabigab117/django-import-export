@@ -41,5 +41,38 @@ Ce projet Django utilise **django-import-export** dans l'administration pour imp
 - **Import** : via l’interface admin, bouton “Import” sur le modèle `Produit`.
 - **Export** : bouton “Export” pour récupérer les données au format CSV ou Excel (`.xlsx`).
 
----
+## Permissions
+
+La configuration des permissions d'import/export est définie dans `settings.py` :
+
+```python
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'add'
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
+```
+
+### Configuration des permissions
+
+- **Import** (`IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'add'`) :
+  - Seuls les utilisateurs ayant la permission "add" sur le modèle peuvent importer des données.
+  - Exemple : pour importer des produits, l'utilisateur doit avoir la permission `stock.add_produit`.
+
+- **Export** (`IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'`) :
+  - Seuls les utilisateurs ayant la permission "view" sur le modèle peuvent exporter des données.
+  - Exemple : pour exporter des produits, l'utilisateur doit avoir la permission `stock.view_produit`.
+
+### Permissions par défaut
+
+Si ces paramètres ne sont pas définis (valeur `None`), tous les utilisateurs connectés à l'admin peuvent importer et exporter sans restriction.
+
+### Gestion des permissions dans l'admin Django
+
+Les permissions sont automatiquement créées par Django pour chaque modèle :
+- `add_<model>` : ajouter des instances
+- `change_<model>` : modifier des instances  
+- `delete_<model>` : supprimer des instances
+- `view_<model>` : voir des instances
+
+Ces permissions peuvent être attribuées aux utilisateurs ou groupes via l'interface d'administration Django.
+
+
 
