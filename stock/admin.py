@@ -20,7 +20,7 @@ class ProduitResource(resources.ModelResource):
 
 
 @admin.register(Magasin)
-class MagasinAdmin(ImportExportModelAdmin):
+class MagasinAdmin(admin.ModelAdmin):
     list_display = ['name']
     search_fields = ['name']
 
