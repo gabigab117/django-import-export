@@ -7,14 +7,15 @@ from .models import Magasin, Produit
 
 class ProduitResource(resources.ModelResource):
     magasin = fields.Field(
-        column_name='magasin__name',
-        attribute='magasin',
-        widget=ForeignKeyWidget(Magasin, 'name'))
+        column_name='magasin__name', # Nom de la colonne dans le fichier d'import/export
+        attribute='magasin', # Attribut du modèle Produit
+        widget=ForeignKeyWidget(Magasin, 'name')) # Widget pour gérer la relation ForeignKey
 
     class Meta:
         model = Produit
         fields = ('name', 'price', 'stock', 'magasin') # 'magasin__name' is now handled by the widget
-        import_id_fields = ('name',) # Unique identifier for import/export
+        import_id_fields = ('name',) # Vérifie si le nom du produit existe déjà pour éviter les doublons
+        # Si il y a deux éléments dans le tuples, un produit est considéré comme existant si les deux éléments sont identiques
         skip_unchanged = True  # Ignore les lignes qui ne modifient pas les données existantes lors de l'importation
         report_skipped = True  # Inclut les lignes ignorées dans le rapport d'importation
 
